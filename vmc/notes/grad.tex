@@ -1,0 +1,60 @@
+\section{Gradient}
+The wavefunction is 
+\begin{align}
+\psi(r_1, r_2) &= \exp(-\alpha r_1) \exp(-\alpha r_2). \\
+\psi(x_1, y_1, z_1, x_2, y_2, z_2) &= \exp \left(-\alpha \sqrt{x_1^2 + y_1^2 + z_1^2}\right) \exp \left(\alpha \sqrt{x_2^2 + y_2^2 + z_2^2} \right).
+\end{align}
+The gradient is
+\begin{align}
+\nabla \psi &= \left[
+\frac{\partial \psi}{\partial x_1}, 
+\frac{\partial \psi}{\partial y_1}, 
+\frac{\partial \psi}{\partial z_1},
+\frac{\partial \psi}{\partial x_2},
+\frac{\partial \psi}{\partial y_2},
+\frac{\partial \psi}{\partial z_2}
+\right]^T.
+\end{align}
+Evaluate each element.
+\begin{align}
+\frac{\partial \psi}{\partial x_1} &= -\alpha \exp \left(-\alpha \sqrt{x_1^2 + y_1^2 + z_1^2}\right) \frac{1}{2} (x_1^2 + y_1^2 + z_1^2)^{-1/2} 2x_1 \exp \left(\alpha \sqrt{x_2^2 + y_2^2 + z_2^2} \right)
+&= -\alpha \frac{x_1}{r_1} \psi
+\end{align}
+Thus, the gradient is 
+\begin{align}
+\Aboxed{\frac{\nabla \psi}{\psi} &= -\alpha \left[\frac{x_1}{r_1}, \frac{y_1}{r_1}, \frac{z_1}{r_1}, \frac{x_2}{r_2}, \frac{y_2}{r_2}, \frac{z_2}{r_2} \right]^T.}
+\end{align}
+
+\section{Laplacian}
+\begin{align}
+\frac{\partial^2 \psi}{\partial x_1^2} 
+&= -\alpha \exp\left(-\alpha \sqrt{x_2^2 + y_2^2 + z_2^2} \right) 
+\frac{\partial}{\partial x_1} \left[   
+    x_1 \frac{1}{\sqrt{x_1^2 + y_1^2 + z_1^2}} \exp \left(-\alpha \sqrt{x_1^2 + y_1^2 + z_1^2}\right) 
+\right] \\
+&= -\alpha \exp\left(-\alpha \sqrt{x_2^2 + y_2^2 + z_2^2} \right) \frac{\partial}{\partial x_1} A.\\
+\end{align}
+\begin{align}
+\frac{\partial A}{\partial x_1} 
+&= \frac{1}{\sqrt{x_1^2 + y_1^2 + z_1^2}} \exp \left(-\alpha \sqrt{x_1^2 + y_1^2 + z_1^2}\right)  \\
+    &~~~+ x_1  \left(-\frac{1}{2}\right) (x_1^2 + y_1^2 + z_1^2)^{-\frac{3}{2}} 2x_1 \exp\left(-\alpha \sqrt{x_1^2 + y_1^2 + z_1^2}\right) \\
+    &~~~+ x_1 \frac{1}{\sqrt{x_1^2 + y_1^2 + z_1^2}} (-\alpha) \frac{1}{2}  \frac{2x_1}{\sqrt{x_1^2 + y_1^2 + z_1^2}} \exp\left(-\alpha \sqrt{x_1^2 + y_1^2 + z_1^2}\right) \\
+&= \left[\frac{1}{r_1} - \frac{x_1^2}{r_1^3} - \alpha \frac{x_1^2}{r_1^2}\right] \exp(-\alpha r_1). \\
+\end{align}
+\begin{align}
+\frac{\partial^2 \psi}{\partial x_1^2} &= -\alpha \exp\left(-\alpha r_2 \right)  \left[\frac{1}{r_1} - \frac{x_1^2}{r_1^3} - \alpha \frac{x_1^2}{r_1^2}\right] \exp(-\alpha r_1) \\
+&= -\frac{\alpha}{r_1} \psi \left[1 - \frac{x_1^2}{r_1^2} - \alpha\frac{x_1^2}{r_1} \right].
+\end{align}
+Thus, the laplacian is
+\begin{align}
+\frac{\nabla^2 \psi}{\psi} &= \left[
+\frac{\partial^2 \psi}{\partial x_1^2} + \frac{\partial^2 \psi}{\partial y_1^2} + \frac{\partial^2 \psi}{\partial z_1^2}, 
+\frac{\partial^2 \psi}{\partial x_2^2} + \frac{\partial^2 \psi}{\partial y_2^2} + \frac{\partial^2 \psi}{\partial z_2^2}
+\right] \\
+&= \left[
+-\frac{\alpha}{r_1}\left(3 - \frac{x_1^2 + y_1^2 + z_1^2}{r_1^2} - \alpha \frac{x_1^2 + y_1^2 + z_1^2}{r_1}\right),
+-\frac{\alpha}{r_2}\left(3 - \frac{x_2^2 + y_2^2 + z_2^2}{r_2^2} - \alpha \frac{x_2^2 + y_2^2 + z_2^2}{r_2}\right)
+\right] \\
+&= \left[-\frac{\alpha}{r_1} (2 - \alpha r_1), -\frac{\alpha}{r_2}(2 - \alpha r_2) \right] \\
+&= \boxed{\left[-\frac{2 \alpha}{r_1} + \alpha^2, -\frac{2 \alpha}{r_2} + \alpha^2 \right].}
+\end{align}

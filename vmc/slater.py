@@ -1,6 +1,6 @@
 ﻿import numpy as np
 
-import wf
+import tests
 
 class SlaterWF:
     """
@@ -45,6 +45,9 @@ class SlaterWF:
         distance = self.get_distance(pos)
         return -2*self.alpha/distance + self.alpha**2
 
+    def kinetic(self, pos):
+        return -0.5*np.sum(self.laplacian(pos), axis=0)
+
 def test_slater():
     '''
     2 electrons, 3 dimensions, 5 configurations
@@ -57,7 +60,7 @@ def test_slater():
     # testpos = np.random.randn(nelec, ndim, nconf)
     testpos = np.random.normal(size=(nelec, ndim, nconf))
     slater_wf = SlaterWF(alpha)
-    wf.test_wavefunction(slater_wf)
+    tests.test_wavefunction(slater_wf)
 
 if __name__ == '__main__':
     test_slater()

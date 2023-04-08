@@ -23,18 +23,18 @@ def metropolis_sample(pos, wf, tau=0.01, nstep=1000):
     return poscur, acceptance_ratio
 
 def test_metropolis(nelec=2, ndim=3, nconf=1000, nstep=100, tau=0.1, alpha=3, Z=2):
-    from slater import SlaterWF
-    from hamiltonian import Hamiltonian
+    import slater
+    import hamiltonian
     import pandas as pd
 
-    wf = SlaterWF(alpha=alpha)
-    ham = Hamiltonian(Z=Z)
+    wf = slater.SlaterWF(alpha=alpha)
+    ham = hamiltonian.Hamiltonian(Z=Z)
 
     possample = np.random.randn(nelec, ndim, nconf)
     possample, acc = metropolis_sample(possample, wf, tau=tau, nstep=nstep)
 
     # calculate kinetic energy
-    ke = -0.5*np.sum(wf.laplacian(possample), axis=0)
+    ke = wf.kinetic(possample)
 
     # calculate potential energy
     v_en = ham.pot_en(possample)

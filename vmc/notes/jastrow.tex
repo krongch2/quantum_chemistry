@@ -1,0 +1,46 @@
+\section{Jastrow}
+
+The Jastrow factor is
+\begin{align}
+\psi(r_1, r_2) &= \exp(\beta r_{12}) = \exp(\beta |r_1 - r_2|) \\
+\psi(x_1, y_1, z_1, x_2, y_2, z_2) &= \exp \left[\beta \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2} \right]
+\end{align}
+\section{Gradient}
+Take the derivative.
+\begin{align}
+\frac{\partial \psi}{\partial x_1} &= \beta \frac{1}{2} [(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2]^{-1/2} 2(x_1 - x_2) \exp \left[\beta \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2} \right]\\
+&= \beta \frac{x_1 - x_2}{\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2}} \exp \left[\beta \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2} \right] \\
+&= \beta \frac{x_1 - x_2}{r_{12}} \exp(\beta r_{12}) \\
+&= \beta \frac{x_1 - x_2}{r_{12}} \psi.
+\end{align}
+The gradient is
+\begin{align}
+\frac{\nabla \psi}{\psi} &= \frac{\beta}{r_{12}} [x_1 - x_2, y_1 - y_2, z_1 - z_2, x_2 - x_1, y_2 - y_1, z_2 - z_1]^T \\
+&= \frac{\beta}{r_{12}} [\mathbf{r}_{12}, -\mathbf{r}_{12}]^T \\
+&= \boxed{\frac{\beta}{r_{12}} [1, -1]^T \mathbf{r}_{12}}.
+\end{align}
+
+\section{Laplacian}
+Take the derivative using \texttt{sympy} to reduce pain.
+\begin{align}
+\frac{\partial^2 \psi}{\partial x_1^2} &= \beta \left[\frac{\beta(x_1 - x_2)^2}{r_{12}^2} - \frac{(x_1 - x_2)^2}{r_{12}^3} + \frac{1}{r_{12}}\right] \psi
+\end{align}
+Thus, the laplacian is
+\begin{align}
+\frac{\nabla^2 \psi}{\psi} &= \frac{\beta}{r_{12}} 
+\biggl[
+\frac{\beta(x_1 - x_2)^2}{r_{12}} - \frac{(x_1 - x_2)^2}{r_{12}^2} + 1 + 
+\frac{\beta(y_1 - y_2)^2}{r_{12}} - \frac{(y_1 - y_2)^2}{r_{12}^2} + 1 + 
+\frac{\beta(z_1 - z_2)^2}{r_{12}} - \frac{(z_1 - z_2)^2}{r_{12}^2} + 1, \\
+&~~~~~~~~\frac{\beta(x_2 - x_1)^2}{r_{12}} - \frac{(x_2 - x_1)^2}{r_{12}^2} + 1 + 
+\frac{\beta(y_2 - y_1)^2}{r_{12}} - \frac{(y_2 - y_1)^2}{r_{12}^2} + 1 + 
+\frac{\beta(z_2 - z_1)^2}{r_{12}} - \frac{(z_2 - z_1)^2}{r_{12}^2} + 1
+\biggr]^T \\
+&= \frac{\beta}{r_{12}^2} 
+\left[
+\frac{\beta r_{12}^2}{r_{12}} - \frac{r_{12}^2}{r_{12}^2} + 3, 
+\frac{\beta r_{12}^2}{r_{12}} - \frac{r_{12}^2}{r_{12}^2} + 3
+\right]^T \\
+&= \frac{\beta}{r_{12}^2} [\beta r_{12} + 2, \beta r_{12} + 2]^T \\
+&= \boxed{\left(\frac{\beta^2}{r_{12}} + \frac{2 \beta}{r_{12}^2} \right) [1, 1]^T}.
+\end{align}

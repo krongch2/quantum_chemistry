@@ -22,31 +22,33 @@ def metropolis_sample(pos, wf, tau=0.01, nstep=1000):
         acceptance_ratio += np.mean(acceptance_idxs)/nstep
     return poscur, acceptance_ratio
 
-def test_metropolis(nelec=2, ndim=3, nconfig=1000, nstep=100, tau=0.1):
+def test_metropolis(nelec=2, ndim=3, nconf=1000, nstep=100, tau=0.1, alpha=3, Z=2):
     from slater import SlaterWF
     from hamiltonian import Hamiltonian
+    import pandas as pd
 
-    wf = SlaterWF(alpha=2)
-    ham = Hamiltonian(Z=1)
+    wf = SlaterWF(alpha=alpha)
+    ham = Hamiltonian(Z=Z)
 
-    possample = np.random.randn(nelec, ndim, nconfig)
+    possample = np.random.randn(nelec, ndim, nconf)
     possample, acc = metropolis_sample(possample, wf, tau=tau, nstep=nstep)
 
     # calculate kinetic energy
     ke = -0.5*np.sum(wf.laplacian(possample), axis=0)
 
     # calculate potential energy
-    vion = ham.pot_en(possample)
-    eloc = ke+vion
+    v_en = ham.pot_en(possample)
+    eloc = ke+v_en
 
     # report
-    print(f'Cycle finished; acceptance = {acc:3.2f}')
-    for name, quant, ref in zip(['kinetic','electron-nucleus','total']
-                         ,[ ke,       vion,              eloc]
-                         ,[ 1.0,      -2.0,              -1.0]):
-        avg=np.mean(quant)
-        err=np.std(quant)/np.sqrt(nconfig)
-        print( f"{name:20s} = {avg:10.6f} +- {err:8.6f}; reference = {ref:5.2f}")
+    print(f'Cycle finished with acceptance_ratio = {acc:3.2f}')
+    l = [
+        {'energy': 'kinetic', 'value': np.mean(ke), 'error': np.std(ke, ddof=1)/np.sqrt(nconf), 'ref': alpha**2},
+        {'energy': 'electron-nucleus', 'value': np.mean(v_en), 'error': np.std(v_en, ddof=1)/np.sqrt(nconf), 'ref': -2*Z*alpha},
+        {'energy': 'total', 'value': np.mean(eloc), 'error': np.std(eloc, ddof=1)/np.sqrt(nconf), 'ref': alpha**2 -2*Z*alpha},
+    ]
+    df = pd.DataFrame(l)
+    print(df)
 
 if __name__=="__main__":
     test_metropolis()

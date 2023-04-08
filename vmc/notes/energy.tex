@@ -1,14 +1,20 @@
 \section{Energy}
+The normalized wavefunction is
+\begin{align}
+\psi(r_1, r_2) &= \alpha^3 \exp(-\alpha r_1) \exp(-\alpha r_2).
+\end{align}
+Using the expression of laplacian from the previous section, the kinetic energy is
 \begin{align}
 \langle K \rangle &= -\frac{1}{2}\int \frac{\nabla_{r_1}^2 \psi}{\psi} |\psi|^2 d^3 r_1 d^3 r_2 -\frac{1}{2}\int \frac{\nabla_{r_2}^2 \psi}{\psi} |\psi|^2 d^3 r_1 d^3 r_2 \\
-&= -\frac{1}{2} \int_0^{\infty}  \left(-\frac{2 \alpha}{r_1} + \alpha^2\right) \exp(-2 \alpha r_1) 4 r_1^2 dr_1 \int_0^{\infty}\exp(-2 \alpha r_2) 4r_2^2 dr_2 + \cdots \\
-&= -\frac{1}{2} \left(-\frac{1}{\alpha}\right) \frac{1}{\alpha^3} -\frac{1}{2} \left(-\frac{1}{\alpha}\right) \frac{1}{\alpha^3} \\
-&= \boxed{\frac{1}{\alpha^4}}.
+&= -\frac{1}{2} \int_0^{\infty}  \left(-\frac{2 \alpha}{r_1} + \alpha^2\right) \alpha^6 \exp(-2 \alpha r_1) 4 r_1^2 dr_1 \int_0^{\infty} \exp(-2 \alpha r_2) 4r_2^2 dr_2 + \cdots \\
+&= -\frac{1}{2} \left(-\frac{1}{\alpha}\right) \frac{1}{\alpha^3} \alpha^6 -\frac{1}{2} \left(-\frac{1}{\alpha}\right) \frac{1}{\alpha^3} \alpha^6 \\
+&= \boxed{\alpha^2}.
 \end{align}
 
+The electron-nuclear potential is
 \begin{align}
-\langle V_{\mathrm{en}} \rangle &= -Z\int \frac{1}{r_1} \exp(-2 \alpha r_1) \exp(-2 \alpha r_2) d^3 r_1 d^3 r_2 - \cdots \\
+\langle V_{\mathrm{en}} \rangle &= -Z\int \frac{\alpha^6}{r_1} \exp(-2 \alpha r_1) \exp(-2 \alpha r_2) d^3 r_1 d^3 r_2 - \cdots \\
 &= -Z\int_0^{\infty} \frac{1}{r_1} \exp(-2 \alpha r_1) 4r_1^2 dr_1 \int_0^{\infty} \exp(-2 \alpha r_2) 4 r_2^2 d r_2 - \cdots \\
-&= -Z \left(\frac{1}{\alpha^2} \right) \left(\frac{1}{\alpha^3} \right) -Z \left(\frac{1}{\alpha^2} \right) \left(\frac{1}{\alpha^3} \right) \\
-&= \boxed{-\frac{2Z}{\alpha^5}}.
+&= -Z \left(\frac{1}{\alpha^2} \right) \left(\frac{1}{\alpha^3} \right) \alpha^6 - Z \left(\frac{1}{\alpha^2} \right) \left(\frac{1}{\alpha^3} \right) \\
+&= \boxed{-2 Z \alpha}.
 \end{align}

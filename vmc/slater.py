@@ -27,7 +27,7 @@ class SlaterWF:
         Evaluates exp(-alpha*r1) exp(-alpha*r2)
         '''
         distance = self.get_distance(pos) # (nelec, nconf)
-        return np.exp(-self.alpha*distance[0, :])*np.exp(-self.alpha*distance[1, :])
+        return self.alpha**3*np.exp(-self.alpha*distance[0, :])*np.exp(-self.alpha*distance[1, :])
 
     def gradient(self, pos):
         '''

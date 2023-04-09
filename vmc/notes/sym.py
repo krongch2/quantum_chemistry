@@ -14,3 +14,6 @@ jastrow = s.exp(b*r12)
 # print(s.latex(jastrow))
 # print(s.latex(s.diff(jastrow, x1, 1)))
 # print(s.latex(s.diff(jastrow, x1, 2)))
+
+lap = s.diff(jastrow, x1, 2) + s.diff(jastrow, y1, 2) + s.diff(jastrow, z1, 2)
+print(s.latex(s.simplify(lap)))

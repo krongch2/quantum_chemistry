@@ -35,27 +35,14 @@ class JastorwWF:
         outer = np.outer([1, -1], r_vec/r_ee[None, :]).reshape(pos.shape)
         return self.beta*outer
 
-    def laplacian(self,pos):
-        eedist=(np.sum((pos[0,:,:]-pos[1,:,:])**2,axis=0)**0.5)[np.newaxis,:]
-        pdee=np.outer([1,-1],(pos[0,:,:]-pos[1,:,:])/eedist).reshape(pos.shape)
-        pdee2=pdee[0]**2 # Sign doesn't matter if squared.
-        pd2ee=(eedist**2-(pos[0,:,:]-pos[1,:,:])**2)/eedist**3
-        lap_ee=np.sum(self.beta*pd2ee + self.beta**2*pdee2,axis=0)
-        #Laplacian is the same for both electrons
-        return np.array([lap_ee,lap_ee])
-
-    def laplacian2(self, pos):
-        # TODO FIX THIS!!!
-        # r_vec = self.get_r_vec(pos)
+    def laplacian(self, pos):
         r_ee = self.get_r_ee(pos)
-        lap = self.beta**2/r_ee + 2*self.beta/r_ee**2
+        lap = self.beta**2 + 2*self.beta/r_ee
         return np.array([lap, lap])
 
 def test_jastrow():
     jastrow = JastorwWF(beta=1)
     pos = np.random.randn(2, 3, 5)
-    print(jastrow.laplacian(pos))
-    print(jastrow.laplacian2(pos))
 
     tests.test_wavefunction(jastrow)
 

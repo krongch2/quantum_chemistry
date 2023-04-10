@@ -1,8 +1,8 @@
 import numpy as np
 
-import tests
+import wavefunction
 
-class JastorwWF:
+class JastrowWF:
     '''
     Jastrow factor of the form
     exp(J_ee)
@@ -44,7 +44,7 @@ def test_jastrow():
     jastrow = JastorwWF(beta=1)
     pos = np.random.randn(2, 3, 5)
 
-    tests.test_wavefunction(jastrow)
+    wavefunction.test_wavefunction(jastrow)
 
 if __name__ == '__main__':
     test_jastrow()

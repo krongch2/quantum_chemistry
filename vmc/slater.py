@@ -1,6 +1,6 @@
 ﻿import numpy as np
 
-import tests
+import wavefunction
 
 class SlaterWF:
     """
@@ -60,7 +60,7 @@ def test_slater():
     # testpos = np.random.randn(nelec, ndim, nconf)
     testpos = np.random.normal(size=(nelec, ndim, nconf))
     slater_wf = SlaterWF(alpha)
-    tests.test_wavefunction(slater_wf)
+    wavefunction.test_wavefunction(slater_wf)
 
 if __name__ == '__main__':
     test_slater()

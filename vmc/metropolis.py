@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+
 
 def metropolis_sample(pos, wf, tau=0.01, nstep=1000):
     '''
@@ -20,12 +22,12 @@ def metropolis_sample(pos, wf, tau=0.01, nstep=1000):
         acceptance_idxs = acceptance_prob > u
         poscur[:, :, acceptance_idxs] = propose[:, :, acceptance_idxs]
         acceptance_ratio += np.mean(acceptance_idxs)/nstep
+        print(acceptance_ratio)
     return poscur, acceptance_ratio
 
 def test_metropolis(nelec=2, ndim=3, nconf=1000, nstep=100, tau=0.1, alpha=3, Z=2):
     import slater
     import hamiltonian
-    import pandas as pd
 
     wf = slater.SlaterWF(alpha=alpha)
     ham = hamiltonian.Hamiltonian(Z=Z)

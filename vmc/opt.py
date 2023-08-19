@@ -8,13 +8,13 @@ import hamiltonian
 import metropolis
 import wavefunction
 
-def eval_energy(ham, wf, nelec, ndim, nconf, tau, nstep):
-    pos = np.random.randn(nelec, ndim, nconf)
-    pos, acc = metropolis.metropolis_sample(pos, wf, tau=tau, nstep=nstep)
+def eval_energy(ham, wf, pos):
     ke = -0.5*np.sum(wf.laplacian(pos), axis=0)
     v_en = ham.pot_en(pos)
     v_ee = ham.pot_ee(pos)
-    return ke, v_en, v_ee, acc
+    pot = ham.pot(pos)
+    eloc = ke + pot
+    return ke, v_en, v_ee, pot, eloc
 
 def scan_alpha_beta(Z=2, nelec=2, ndim=3, nconf=1000, tau=0.2, nstep=100, data_dir='data'):
     beta = 0
@@ -27,7 +27,9 @@ def scan_alpha_beta(Z=2, nelec=2, ndim=3, nconf=1000, tau=0.2, nstep=100, data_d
                 wf = slater.SlaterWF(alpha=alpha)
             else:
                 wf = wavefunction.MultiplyWF(slater.SlaterWF(alpha=alpha), jastrow.JastrowWF(beta=beta))
-            ke, v_en, v_ee, acc = eval_energy(ham, wf, nelec, ndim, nconf, tau, nstep)
+            pos = np.random.randn(nelec, ndim, nconf)
+            pos, acc = metropolis.metropolis_sample(pos, wf, tau=tau, nstep=nstep)
+            ke, v_en, v_ee, acc = eval_energy(ham, wf, pos, tau, nstep)
 
             for conf_i in range(nconf):
                 l.append({

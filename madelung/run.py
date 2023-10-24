@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
+import argparse
+
 
 palette = sns.color_palette()
 
@@ -163,8 +165,12 @@ def get_madelung(nx, ny, nz):
                         mult = 6*2*2*2
 
                 madelung += constant*mult
-    print(madelung)
+        print(madelung)
     print('time: ', time.time() - start)
 
 if __name__ == '__main__':
-    get_madelung(1000, 1000, 1000)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-n', nargs='+', type=int)
+    args = parser.parse_args()
+    print(args.n)
+    get_madelung(*args.n)

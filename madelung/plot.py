@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
+
+palette = sns.color_palette()
 
 def get_lattice_coords(latvecs=np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]), basis=[0, 0, 0], N=1):
     coords = []
@@ -13,24 +16,29 @@ def get_lattice_coords(latvecs=np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]), basi
     coords = np.array(coords)
     return coords
 
-def plot(latvecs, configs, N=1):
-    fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
-    ax.set_aspect('equal')
+def plot(latvecs, configs, N=5):
+    # fig = plt.figure()
+    # ax = fig.add_subplot(projection='3d')
+    fig, ax = plt.subplots(figsize=(4, 4))
+
 
     coords = get_lattice_coords(latvecs=latvecs, basis=[0, 0, 0], N=N)
-    ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], s=100, color='blue')
+    print(coords)
+    ax.plot(coords[:, 0], coords[:, 1], 'o', ms=10, color=palette[0], lw=0, label='+')
 
     coords = get_lattice_coords(latvecs=latvecs, basis=configs, N=N)
-    ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], s=50, color='red')
+    ax.plot(coords[:, 0], coords[:, 1], 'o', ms=5, color=palette[1], lw=0, label='-')
 
-    ax.scatter([0], [0], [0], s=100, color='green')
+    ax.plot([0], [0], 'o', ms=10, color=palette[0], lw=0)
+    ax.legend(bbox_to_anchor=(1.05, 0.88), fancybox=False, edgecolor='k')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
 
-    ax.set_xlim(-2*N, 2*N)
-    ax.set_ylim(-2*N, 2*N)
-    ax.set_zlim(-2*N, 2*N)
-
-    plt.show()
+    ax.set_xlim(-N, N)
+    ax.set_ylim(-N, N)
+    ax.set_aspect('equal')
+    fig.tight_layout()
+    plt.savefig('madelung.png', bbox_inches='tight', dpi=500)
 
 if __name__ == '__main__':
 

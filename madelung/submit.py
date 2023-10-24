@@ -26,6 +26,6 @@ export OMP_NUM_THREADS=1
 
 if __name__ == '__main__':
     for n in [
-        30000, 50000, 100000
+        60000, 70000, 80000, 90000, 100000
         ]:
         submit_slurm(f'python run.py -n {n} {n} 1', prefix=f'{n}')

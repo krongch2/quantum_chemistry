@@ -1,0 +1,6 @@
+/projects/wagner/highthroughput/quantum_chemistry/madelung
+/projects/wagner/highthroughput/quantum_chemistry/madelung
+run.py:9: RuntimeWarning: divide by zero encountered in true_divide
+  constant = (-1)**(np.abs(i+j+k))/np.sqrt(i**2+j**2+k**2)
+[6001, 6001, 1]
+-1.7492294302130262

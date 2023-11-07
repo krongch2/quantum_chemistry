@@ -25,7 +25,6 @@ export OMP_NUM_THREADS=1
     os.system(f'sbatch {submit_fn}')
 
 if __name__ == '__main__':
-    for n in [
-        60000, 70000, 80000, 90000, 100000
-        ]:
+    for n in range(5000, 80000, 1000):
+        n += 1
         submit_slurm(f'python run.py -n {n} {n} 1', prefix=f'{n}')

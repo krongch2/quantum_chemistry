@@ -1,0 +1,4 @@
+/projects/wagner/highthroughput/quantum_chemistry/madelung
+/projects/wagner/highthroughput/quantum_chemistry/madelung
+/var/spool/slurmd/job9881411/slurm_script: line 12: 14739 Killed                  python run.py -n 76001 76001 1
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=9881411.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.
